@@ -3,6 +3,7 @@ local AutoloadMode = require('session_manager.config').AutoloadMode
 local utils = require('session_manager.utils')
 local Path = require('plenary.path')
 local session_manager = {}
+session_manager['session_name'] = ''
 
 --- Apply user settings.
 ---@param values table
@@ -39,12 +40,29 @@ end
 function session_manager.load_current_dir_session(discard_current)
   local session_name = utils.dir_to_session_filename(vim.loop.cwd())
   if session_name:exists() then
+    session_manager.session_name = session_name.filename
     utils.load_session(session_name.filename, discard_current)
   end
 end
 
 --- Saves a session for the current working directory.
-function session_manager.save_current_session() utils.save_session(utils.dir_to_session_filename().filename) end
+function session_manager.save_current_session()
+  if not session_manager.session_name then
+    session_manager.session_name = utils.dir_to_session_filename().filename
+  end
+  utils.save_session(session_manager.session_name)
+end
+
+--- Saves a session using a custom session name if provided, otherwise using directory for session name
+function session_manager.save_session(name)
+  if not name then
+    session_manager.session_name = utils.dir_to_session_filename().filename
+  else
+    session_manager.session_name = name
+  end
+
+  utils.save_session(session_manager.session_name)
+end
 
 --- Loads a session based on settings. Executed after starting the editor.
 function session_manager.autoload_session()
