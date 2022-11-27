@@ -12,13 +12,14 @@ The plugin saves the sessions in the specified folder (see [configuration](#conf
 
 Use the command `:SessionManager[!]` with one of the following arguments:
 
-| Argument                   | Description                                                                                  |
-| -------------------------- | -------------------------------------------------------------------------------------------- |
-| `load_session`             | Select and load session.                                                                     |
-| `load_last_session`        | Will remove all buffers and `:source` the last saved session.                                |
-| `load_current_dir_session` | Will remove all buffers and `:source` the last saved session file of the current dirtectory. |
-| `save_current_session`     | Works like `:mksession`, but saves/creates current directory as a session in `sessions_dir`. |
-| `delete_session`           | Select and delete session.                                                                   |
+| Argument                   | Description                                                                                              |
+| -------------------------- | -------------------------------------------------------------------------------------------------------- |
+| `load_session`             | Select and load session.                                                                                 |
+| `load_last_session`        | Will remove all buffers and `:source` the last saved session.                                            |
+| `load_current_dir_session` | Will remove all buffers and `:source` the last saved session file of the current dirtectory.             |
+| `save_current_session`     | Works like `:mksession`, but saves/creates current directory as a session in `sessions_dir`.             |
+| `save_session`             | Works like `save_current_session`, but allows passing an optional custom name instead of using dir name. |
+| `delete_session`           | Select and delete session.                                                                               |
 
 When `!` is specified, the modified buffers will not be saved.
 
