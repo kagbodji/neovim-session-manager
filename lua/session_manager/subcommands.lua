@@ -29,12 +29,23 @@ end
 --- Run specified subcommand received from completion.
 ---@param subcommand table
 function subcommands.run(subcommand)
-  local subcommand_func = session_manager[subcommand.fargs[1]]
+  local subcommand_func, args
+  local cmd_and_args = vim.split(subcommand.fargs[1], ' ', { trimempty = true })
+
+  --get cmd and possible args
+  if #cmd_and_args >= 1 then
+    subcommand_func = session_manager[cmd_and_args[1]]
+  end
+  if #cmd_and_args >= 2 then
+    args = session_manager[cmd_and_args[2]]
+  end
+
   if not subcommand_func then
     utils.notify('No such subcommand: ' .. subcommand.fargs[1], vim.log.levels.ERROR)
     return
   end
-  subcommand_func(subcommand.bang)
+
+  subcommand_func(subcommand.bang, args)
 end
 
 return subcommands

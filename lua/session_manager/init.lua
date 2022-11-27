@@ -54,7 +54,7 @@ function session_manager.save_current_session()
 end
 
 --- Saves a session using a custom session name if provided, otherwise using directory for session name
-function session_manager.save_session(name)
+function session_manager.save_session(_, name)
   if not name then
     session_manager.session_name = utils.dir_to_session_filename().filename
   else
